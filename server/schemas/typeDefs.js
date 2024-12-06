@@ -19,7 +19,7 @@ const typeDefs = `
         firstTeam: String!
         secondTeam: String!
         description: Text!
-        odds : Float!
+        odds : Int!
         comments: [Comment]!
     }
     
@@ -37,7 +37,22 @@ const typeDefs = `
         getEvent(id: ID!): Event
         getUser(id: ID!): User
     }
-        
+
+    input EventInput {
+        FirstTeam: String!
+        SecondTeam: String!
+        description: Text!
+        odds: Int!
+    }
+
+    type Mutation { 
+        createEvent(event: EventInput!): User
+        login(email: String!, password: String!): Auth
+        signup(username: String!, email: String!, password: String!): Auth
+        createComment(eventId: ID!, text: String!): Comment
+        addFriend(username: String!): [User]
+        deleteEvent(_id: ID!): Event
+    }
 
     
     
