@@ -9,6 +9,7 @@ const typeDefs = `
   friends; [User]
  }
 
+
  type Event {
   _id: ID!
   firstTeam: String!
@@ -30,6 +31,7 @@ const typeDefs = `
   user: User!
  }
 
+
  type Query {
   user(_id: ID!): Profile
   event(user: ID!): [Event]
@@ -48,6 +50,7 @@ const typeDefs = `
   text: String!
  }
 
+
  type Mutation {
   createEvent(eventInput: EventInput!): User
   login(email: String, password: String): Auth
@@ -56,6 +59,7 @@ const typeDefs = `
   addFriend(username: String!): [User]
   deleteEvent(_id: ID!): Event
  }
+
 `
 
-module.exports = typeDefs
+module.exports = typeDefs;
