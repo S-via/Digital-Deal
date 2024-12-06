@@ -1,4 +1,4 @@
-// JWT decoding function
+// JWT decoding  and user authorization function
 
 import decode from 'jwt-decode';
 
