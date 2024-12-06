@@ -52,7 +52,7 @@ const typeDefs = `
   createEvent(eventInput: EventInput!): User
   login(email: String, password: String): Auth
   signup(username: String, email: String, password: String): User
-  createComment(createdComment: CreatedComment): User
+  createComment(createdComment: CreatedComment): Comment
   addFriend(username: String!): [User]
   deleteEvent(_id: ID!): Event
  }
