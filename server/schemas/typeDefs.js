@@ -18,7 +18,7 @@ const typeDefs = `
         _id: ID!
         firstTeam: String!
         secondTeam: String!
-        description: Text!
+        description: String!
         odds : Int!
         comments: [Comment]!
     }
@@ -28,7 +28,7 @@ const typeDefs = `
     type Comment {
         _id: ID!
         user: User
-        text: Text!
+        text: String!
         timestamp: String!
     }
 
@@ -42,7 +42,7 @@ const typeDefs = `
     input EventInput {
         FirstTeam: String!
         SecondTeam: String!
-        description: Text!
+        description: String!
         odds: Int!
     }
 

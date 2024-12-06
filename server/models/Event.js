@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose')
 
 const User = require('./User')
-const Comment = require('./Comment')
+const commentSchema = require('./Comment')
 
 const eventSchema = new Schema(
     {
@@ -14,15 +14,18 @@ const eventSchema = new Schema(
             required: true,
         },
         description: {
-            type: Text,
+            type: String,
             required: true
         },
         odds: {
-            type: Int,
+            type: Number,
             required: true,
         },
-        competitors: [User],
-        comments: [Comment],
+        creator: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        comments: [commentSchema],
     },
     {
         toJSON: {

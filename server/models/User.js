@@ -1,8 +1,10 @@
 const {Schema, model} =require('mongoose');
 const bcrypt = require('bcryptjs')
 
+const Event = require('./Event')
 
-const uesrSchema = new Schema(
+
+const userSchema = new Schema(
     {
         username: {
             type: String,
@@ -13,16 +15,25 @@ const uesrSchema = new Schema(
             type: String,
             require: true,
             unique: true,
-            match: [/.+@+\..+/, 'Valid Email Required'],
+            match: [/.+@.+\..+/, 'Valid Email Required'],
         },
         password: {
             type: String,
             required: true,
 
         },
-        hostedEvents: [Event],
-        joinedEvents: [Event],
-        friends: [User],
+        hostedEvents: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Event'
+        }],
+        joinedEvents: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Event'
+        }],
+        friends: [{
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        }],
 
         
     },
@@ -38,6 +49,6 @@ userSchema.methods.isCorrectPassword = async function (password){
     return bcrypt.compare(password, this.password)
 }
 
-const User = model('User', uesrSchema )
+const User = model('User', userSchema )
 
 module.exports = User;
