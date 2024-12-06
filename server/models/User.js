@@ -1,19 +1,16 @@
-const {Schema, model} =require('mongoose');
+const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs')
-
-const Event = require('./Event')
-
 
 const userSchema = new Schema(
     {
         username: {
             type: String,
-            required: true, 
+            required: true,
             unique: true,
         },
         email: {
             type: String,
-            require: true,
+            required: true,
             unique: true,
             match: [/.+@.+\..+/, 'Valid Email Required'],
         },
@@ -35,7 +32,7 @@ const userSchema = new Schema(
             ref: 'User',
         }],
 
-        
+
     },
     {
         toJSON: {
@@ -44,18 +41,18 @@ const userSchema = new Schema(
     }
 )
 
-userSchema.pre('save', async function(next) {
-    if(this.isNew || this.isModified('password')){
+userSchema.pre('save', async function (next) {
+    if (this.isNew || this.isModified('password')) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(this.password, saltRounds);
     }
     next()
 })
 
-userSchema.methods.isCorrectPassword = async function (password){ 
+userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password)
 }
 
-const User = model('User', userSchema )
+const User = model('User', userSchema)
 
 module.exports = User;

@@ -1,12 +1,11 @@
-const {Schema, model} = require('mongoose')
+const { Schema, model } = require('mongoose')
 
-const User = require('./User')
 const commentSchema = require('./Comment')
 
 const eventSchema = new Schema(
     {
         FirstTeam: {
-            type: String, 
+            type: String,
             required: true,
         },
         SecondTeam: {
