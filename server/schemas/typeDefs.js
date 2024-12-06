@@ -33,9 +33,10 @@ const typeDefs = `
     }
 
     type Query {
-        getAllEvents: [Event!]!
-        getEvent(id: ID!): Event
-        getUser(id: ID!): User
+        getAllEvents(userId: ID!): [Event!]!
+        getEvent(userId: ID!): Event
+        getUser(userId: ID!): User
+        me: User
     }
 
     input EventInput {
@@ -46,10 +47,10 @@ const typeDefs = `
     }
 
     type Mutation { 
-        createEvent(event: EventInput!): User
+        createEvent(eventDetails: EventInput!): Event
         login(email: String!, password: String!): Auth
         signup(username: String!, email: String!, password: String!): Auth
-        createComment(eventId: ID!, text: String!): Comment
+        createComment(eventId: ID!, text: String!): Event
         addFriend(username: String!): [User]
         deleteEvent(_id: ID!): Event
     }
