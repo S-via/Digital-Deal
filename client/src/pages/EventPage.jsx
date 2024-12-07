@@ -45,7 +45,7 @@ const EventPage = () => {
           mt={6}
         >
           {events.map((item) => (
-            <Card.Root width="100%" maxWidth="320px" key={item.eventId} mx="auto" boxShadow="sm">
+            <Card.Root width="100%" maxWidth="320px" key={item.eventId} mx="auto" >
               <Card.Body>
                 <Card.Title>{item.home_team} vs {item.away_team}</Card.Title>
               </Card.Body>
