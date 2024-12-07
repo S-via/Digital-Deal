@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import {Provider} from './components/ui/provider.jsx'
@@ -22,5 +22,7 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
+  <Provider>
  <RouterProvider router={router}/>
+ </Provider>
 )

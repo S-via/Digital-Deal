@@ -1,45 +1,55 @@
 import { getOdds } from "../utils/odds";
 import { useState, useEffect } from "react";
+import {Card, SimpleGrid} from '@chakra-ui/react'
+import {Button} from '../components/ui/button'
 
 
 
 const EventPage = () => {
     const [events, setEvents] = useState([])
-
-    const handleSubmit = async () => {
-        const response =  await getOdds()
-
-        const data = await response.json();
-        if(!Array.isArray(data)){
-            throw new Error('this is not an array')
-        }
-    try{
-       const eventData = data.map((item)=> ({
-        eventId: item.id,
-        sport: item.sport_key,
-        title: item.sport_title,
-        time: item.commence_time,
-        home_team: item.home_team,
-        away_team: item.away_team,
-       }));
-       setEvents(eventData)
-       
-    }catch(err){
-        console.error(err)
-    }
-    }
     useEffect(()=> {
-        console.log('events: ', events)
+        async function fetchData() {
+        const response = await getOdds()
+        const data = await response.json()
+        
+        try{ 
+            const eventData = data.map((item)=> ({
+                eventId: item.id,
+                sport: item.sport_key,
+                title: item.sport_title,
+                time: item.commence_time,
+                home_team: item.home_team,
+                away_team: item.away_team,
+            }))
+            setEvents(eventData)
+        }catch(err){
+            console.error(err)
+        }
+        }
+    fetchData()
+        
     }, [events])
     
     return (
         <>
-        <button onClick={handleSubmit}>Submit</button>
-            <ul>{events.map((item) => {
-                return (<li className="text-white" key={item.eventId}>{item.home_team} vs {item.away_team}</li>
-            )})}</ul>
+          <SimpleGrid 
+            columns={[1, 2, 3, 4,5, 6]}
+            spacing={12} 
+            mt={6} 
+          >
+            {events.map((item) => (
+              <Card.Root width="100%" maxWidth="320px" key={item.eventId} mx="auto">
+                <Card.Body>
+                  <Card.Title>{item.home_team} vs {item.away_team}</Card.Title>
+                </Card.Body>
+                <Card.Footer justifyContent="flex-end">
+                  <Button className="text-white">Create</Button>
+                </Card.Footer>
+              </Card.Root>
+            ))}
+          </SimpleGrid>
         </>
-    )
+      );
 }
 
 export default EventPage;
