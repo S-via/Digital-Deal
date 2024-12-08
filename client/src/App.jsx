@@ -10,11 +10,11 @@ import { setContext } from '@apollo/client/link/context'
 
 import Header from './components/header';
 
-
 function App() {
 
   return (
     <>
+    
     <Header/>
       <Outlet />
     </>
