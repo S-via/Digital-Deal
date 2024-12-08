@@ -4,18 +4,18 @@ function header (){
     return (
 
 <Box
-position="sticky"
+as="header"
+position="fixed"
 top={0}
+left={0}
+right={0}
 zIndex={1000}
+boxShadow="md"
+
 >
 <Flex
-as="header"
 p={3}
-alignItems="center"
-boxShadow="md"
-position="sticky"
-top={12}
-zIndex={1000}
+
 >
   <HStack spacing={4}>
     <Link><Button>Signup | Login</Button></Link>
