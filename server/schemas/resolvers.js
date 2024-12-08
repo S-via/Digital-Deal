@@ -56,12 +56,18 @@ const resolvers = {
             if(!context.user){
                 throw new Error('You need to be logged in to create an event')
             }
+            console.log('eventDetails', eventDetails);
+            
+            
+            const newEvent =  await Event.create({...eventDetails})
 
-            const newEvent = new Event({eventDetails})
+            await User.findOneAndUpdate(
+                {_id:context.user._id}, {
 
-            await User.findOneAndUpdate(context.user._id, {
                 $push: {hostedEvents: newEvent}
             })
+            console.log('newEvent',newEvent);
+            
             return newEvent
 
         },

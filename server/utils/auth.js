@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 
+//add secret to env file 
 const secret = '2a11a9a92517ee1c3eeb6164733aeb0aba22aec4fdeece8f41bbc63d894263ed'
 const expiration = '2h';
 

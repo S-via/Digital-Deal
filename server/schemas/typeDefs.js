@@ -16,8 +16,8 @@ const typeDefs = `
 
     type Event { 
         _id: ID!
-        firstTeam: String!
-        secondTeam: String!
+        FirstTeam: String!
+        SecondTeam: String!
         description: String!
         odds : Int!
         comments: [Comment]!
