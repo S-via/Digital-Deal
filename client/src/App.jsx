@@ -15,8 +15,9 @@ function App() {
   return (
     <>
     
-    <Header/>
+      <Header/>
       <Outlet />
+    
     </>
   )
 }
