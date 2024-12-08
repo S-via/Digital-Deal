@@ -1,12 +1,21 @@
 import { Flex, Box, HStack, Button, Link, Spacer } from '@chakra-ui/react';
+
 function header (){
     return (
-<Box>
+
+<Box
+as="header"
+position="fixed"
+top={0}
+left={0}
+right={0}
+zIndex={1000}
+boxShadow="md"
+
+>
 <Flex
-  as="header"
-  p={3}
-  alignItems="center"
-  boxShadow="md"
+p={3}
+
 >
   <HStack spacing={4}>
     <Link><Button>Signup | Login</Button></Link>
@@ -18,8 +27,8 @@ function header (){
     <Link><Button>Home</Button></Link>
   </HStack>
 </Flex>
-
 </Box>
+
 )}
 
 
