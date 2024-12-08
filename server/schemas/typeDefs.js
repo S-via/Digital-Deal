@@ -16,8 +16,8 @@ const typeDefs = `
 
     type Event { 
         _id: ID!
-        firstTeam: String!
-        secondTeam: String!
+        homeTeam: String!
+        awayTeam: String!
         description: String!
         odds : Int!
         comments: [Comment]!
@@ -50,7 +50,7 @@ const typeDefs = `
         createEvent(eventDetails: EventInput!): Event
         login(email: String!, password: String!): Auth
         signup(username: String!, email: String!, password: String!): Auth
-        createComment(eventId: ID!, text: String!): Event
+        createComment(eventId: ID!, text: String!): Comment
         addFriend(username: String!): [User]
         deleteEvent(_id: ID!): Event
     }
