@@ -30,6 +30,7 @@ mutation CreateEvent($eventDetails: EventInput!) {
     _id
   description
     FirstTeam
+    SecondTeam
   }
 }`
 
