@@ -8,14 +8,14 @@ import {
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 
-import Header from './components/header';
+import Nav from './components/Nav';
 
 function App() {
 
   return (
     <>
     
-      <Header/>
+      <Nav/>
       <Outlet />
     
     </>
