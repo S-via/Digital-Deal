@@ -6,6 +6,8 @@ import './index.css'
 import App from './App.jsx'
 import EventPage from './pages/EventPage.jsx'
 
+import LoginSign from './components/LoginSign.jsx'
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -15,6 +17,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <EventPage/>
+
+      },
+      { path:'loginsign',
+        element:<LoginSign/>
 
       }
     ]

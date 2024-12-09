@@ -7,6 +7,10 @@ import {
   createHttpLink,
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+feature/linking-pages
+
+import Nav from './components/Nav';
+
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -27,11 +31,18 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+
 function App() {
 
   return (
+feature/linking-pages
+    <>
+    
+      <Nav/>
+
     <ApolloProvider client={client}>
     <Header/>
+
       <Outlet />
     </ApolloProvider>
 
