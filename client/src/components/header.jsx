@@ -1,6 +1,13 @@
 import { Flex, Box, HStack, Button, Link, Spacer } from '@chakra-ui/react';
+import {useState}from 'react'
+import loginSignupPage from './LoginSign';
+
+import Auth from '../utils/auth';
 
 function header (){
+  const [showModal, setShowModal] = useState(false);
+  
+  
     return (
 
 <Box

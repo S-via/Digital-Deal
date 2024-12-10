@@ -1,11 +1,35 @@
+import { useMutation } from '@apollo/client';
 import {Box,Flex,FormControl,FormLabel,Input,Button,Heading } from '@chakra-ui/react';
-
+import { SIGNUP, LOGIN } from '../utils/mutations';
 import { useState } from 'react';
+
 function loginSignupPage() {
 
 const [isFlipped, setFlipped] = useState(false);
 const handleFlip = () => setFlipped(!isFlipped);
 
+const [formData, setFormData] = useState({username: '', email: '', password: ''})
+
+const [signup, {error, data}] = useMutation(SIGNUP)
+const [login, {error,data}] = useMutation(LOGIN)
+
+const handleInputChange = (event) => {
+    const {name, value} = event.target;
+    setFormData({...formData, [name]: value})
+}
+const handleFormSubmit= async(event)=> {
+    event.preventDefault()
+    const form = event.currentTarget;
+    if(form.checkValidity() === false){
+        event.preventDefault()
+        event.stopPropagation()
+    }
+    try{
+        const {data} = await signup({
+            variables: {...formData}
+        })
+    }
+}
 return (
     <Box display="flex" justifyContent="center" alignItems="center">
         <Flex className={`relative`}
