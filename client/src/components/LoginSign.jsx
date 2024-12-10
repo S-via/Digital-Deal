@@ -1,65 +1,158 @@
-import {Box,Flex,FormControl,FormLabel,Input,Button,Heading } from '@chakra-ui/react';
+import { Box, Heading, Input, Button, Link, Stack, Grid } from '@chakra-ui/react';
+import { FormControl, FormLabel, } from '@chakra-ui/form-control'
 
+import { useMutation } from '@apollo/client';
+import { SIGNUP, LOGIN } from '../utils/mutations';
+import Auth from '../utils/auth';
 import { useState } from 'react';
-function loginSignupPage() {
+import image from '../assets/presentation.jpg';
 
-const [isFlipped, setFlipped] = useState(false);
-const handleFlip = () => setFlipped(!isFlipped);
+const LoginSign = () => {
 
-return (
-    <Box display="flex" justifyContent="center" alignItems="center">
-        <Flex className={`relative`}
-         width="350px"
-         height="500px" 
-         transform ={`perspective(1000px)} ${
-          isFlipped ? 'rotateY(180deg)' : ''}`}
-        position="relative"
-        transition="transform 0.7s">
-            
-            {/*SignUp */}
-            <Box
-            width="100px"
-            height="100px"
-            transform ={`rotateY (${
-                isFlipped ? 180:0} deg)`}
-                backfaceVisibility="hidden"
-                transition="transform 0.75">
+    /////// form state /////// 
+    const [userData, setUserData] = useState({ username: '', email: '', password: '' });
+    const [formStatus, setformStatus] = useState('signup')
+    const [Signup] = useMutation(SIGNUP);
+    const [Login] = useMutation(LOGIN);
 
-                <Heading>SignUp</Heading>
-                <FormControl><FormLabel>Username</FormLabel>
-                    <Input />
-                </FormControl>
-                <FormControl><FormLabel>Email</FormLabel>
-                    <Input />
-                </FormControl>
-                <FormControl><FormLabel>Password</FormLabel>
-                    <Input />
-                </FormControl>
-                <Button onClick={handleFlip}>Sign Up</Button>
+    ////////// input changes /////////
+    const handleInput = (event) => {
+        const { name, value } = event.target;
+        setUserData({ ...userData, [name]: value });
+    }
 
-            </Box>
-        </Flex>
+   
 
-        <Box
-        width="100px"
-        height="100px"
-        transform ={`rotateY (${
-            isFlipped ? 0: -180} deg)`}
-            backfaceVisibility="hidden"
-            transition="transform 0.75">
-        
-            <Heading>Log In</Heading>
-            <FormControl><FormLabel>Email</FormLabel>
-                <Input />
-            </FormControl>
-            <FormControl><FormLabel>Password</FormLabel>
-                <Input />
-            </FormControl>
-            <Button colorScheme="blue" onClick={handleFlip}>Sign Up</Button>
 
-        </Box>
-    </Box>
-)
+    ////////// form submission /////////
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+
+        // if user chooses to signup use signup mutation
+
+        if (formStatus === 'signup'){
+            try {
+                const { data } = await Signup({ variables: { ...userData } });
+
+                /////// token /////////
+             Auth.login(data.signup.token)
+                ////// clear form ////////
+                setUserData({
+                    username: '',
+                    email: '',
+                    password: '',
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        // else use login mutation with token
+        try {
+            const { data } = await Login({ variables: { email: userData.email, password: userData.password } });
+
+            Auth.login(data.login.token)
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    //////// switch between sign up & login ///////
+    const formSwitch = () => {
+        setformStatus(formStatus === 'signup' ? 'login' : 'signup');
+    };
+
+    return (
+        <>
+            {/* CONTAINER FOR ALL*/}
+            <Grid
+                className='fullformcontainer'
+                templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+                gap={4}
+
+                position="fixed"
+                top="50%"
+                left="50%"
+                right={0}
+                zIndex={1000}
+                boxShadow="md"
+                transform="translate(-50%, -50%)"
+                width="95%"
+                height="80vh"
+                maxWidth="1200px">
+
+                {/* IMAGE SECTION*/}
+                <Box
+                    backgroundImage={`url(${image})`}
+                    backgroundSize="cover"
+                    backgroundPosition="center"
+                    opacity={0.8}
+                    zIndex={1}
+                    height={{ base: "180px", md: "auto" }}
+                />
+                {/* /* LOGIN/SIGN UP FORM */}
+                <Box
+                    boxShadow="lg"
+                    borderRadius={8}
+                    borderWidth={1} display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    bd="white"
+                    zIndex={2}
+                    padding="20px">
+
+                    <form onSubmit={handleFormSubmit}>
+                        <Heading md={6}>{formStatus === 'signup' ? 'Sign Up' : 'Login'}
+                        </Heading>
+                        <Stack spacing={4}>
+                            {formStatus === 'signup' && (
+                                <FormControl
+                                isRequired>
+                                    <FormLabel>Username</FormLabel>
+                                    <Input
+                                        value={userData.username}
+                                        onChange={handleInput}
+                                        name="username" />
+                                </FormControl>)}
+                            <FormControl
+                                isRequired>
+                                <FormLabel>Email</FormLabel>
+                                <Input
+                                    name="email"
+                                    type="email"
+                                    value={userData.email}
+                                    onChange={handleInput} />
+                            </FormControl>
+                            <FormControl
+                                isRequired>
+                                <FormLabel>Password</FormLabel>
+                                <Input
+                                    value={userData.password}
+                                    onChange={handleInput}
+                                    name="password"
+                                    type="password" />
+                            </FormControl>
+                            <Button
+                                type="submit"
+                                disabled={!(userData.username && userData.email && userData.password)}
+                                mb={4}>
+                                {formStatus == 'signup' ? 'Sign Up' : 'Log in'}
+                            </Button>
+
+                            {/* LOGIN/SIGNUP LINK */}
+                            <Link
+                                textAlign="center"
+                                onClick={formSwitch}
+                                mt={4}
+                            >
+                                {formStatus === 'signup' ? 'Login Instead' : 'Sign Up Instead'}
+                            </Link>
+                        </Stack>
+                    </form>
+                </Box>
+            </Grid>
+
+        </>
+    )
 
 }
-export default loginSignupPage;
+export default LoginSign;

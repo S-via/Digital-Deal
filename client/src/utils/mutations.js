@@ -13,8 +13,9 @@ mutation createEvent($eventDetails: EventInput!){
 export const LOGIN = gql`
 mutation Login($email: String!, $password: String!){
     login(email: $email, password: $password){
-        token
-        user
+        user{
+            _id 
+        }
     }
 }
 `
@@ -22,8 +23,10 @@ mutation Login($email: String!, $password: String!){
 export const SIGNUP = gql `
 mutation Signup($username: String!, $email: String!, $password: String!){
     signup(username: $username, email: $email, password: $password){
-        token
         user
+        {
+            _id
+        }
     }
 }
 `
