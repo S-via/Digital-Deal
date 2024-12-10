@@ -5,6 +5,7 @@ import {Provider} from './components/ui/provider.jsx'
 import './index.css'
 import App from './App.jsx'
 import EventPage from './pages/EventPage.jsx'
+import FollowedEventsPage from './pages/FollowedEventsPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         index: true,
         element: <EventPage/>
 
+      },
+      {
+        path: '/followedevents',
+        element: <FollowedEventsPage />
       }
     ]
   }

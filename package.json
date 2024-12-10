@@ -17,10 +17,7 @@
         "concurrently": "^5.1.0",
         "server": "^1.0.41",
         "tailwindcss": "^3.4.16"
-    },
-    "dependencies": {
-        "@apollo/server": "^4.11.2",
-        "graphql": "^16.9.0",
-        "nodemon": "^3.1.7"
     }
+    
+    
 }
